@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head_title %} Job Engine {% endblock %}
+
+{% block head_css %}
+{{block.super}}
+
+<link href="{% static "nvd3/build/nv.d3.min.css" %}" rel="stylesheet" type="text/css">
+          {% endblock %}
+
+
+{% block content %}
+
+{% load nvd3_tags %}
+<head>
+    {% include_chart_jscss %}
+    {% load_chart charttype chartdata chartcontainer extra %}
+</head>
+<body>
+    <h1>Fruits vs Calories</h1>
+    {% include_container chartcontainer %}
+</body>
+
+{% endblock %}
+
+{% block footer_javascript %}
+<script src="{% static "d3/d3.min.js" %}"></script>
+<script src="{% static "nvd3/build/nv.d3.min.js" %}"></script>
+
+{% endblock %}

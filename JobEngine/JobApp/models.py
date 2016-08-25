@@ -8,7 +8,12 @@ class Job(models.Model):
         verbose_name=_("title"),
         help_text=_("Enter the job title")
     )
-    description = models.TextField(null=True)
+    location = models.TextField(null=True)
+    offered_salary = models.TextField(null=True)
+    job_description = models.TextField(null=True)
+    no_of_vacancy = models.IntegerField(null=True)
+    job_specification = models.TextField(null=True)
+    educational_qualification = models.TextField(null=True)
     url = models.URLField(max_length=500, blank=True, default='')
 
     class Meta:

@@ -1,0 +1,15 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Sijan Bhandari -- Developer -- @sijanonly
+
+# THANKS
+
+    Thanks for being with me.
+
+# TECHNOLOGY COLOPHON
+	Django
+    HTML5 Boilerplate
+    Twitter Bootstrap

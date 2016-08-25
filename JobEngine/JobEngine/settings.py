@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+APPLICATION_DIR = os.path.dirname(globals()['__file__'])
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_nvd3',
+    'djangobower',
     'JobApp',
 ]
 
@@ -56,7 +59,7 @@ ROOT_URLCONF = 'JobEngine.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,10 +78,22 @@ WSGI_APPLICATION = 'JobEngine.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+def get_env_variable(var_name):
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_env_variable('DATABASE_NAME'),
+        'USER': get_env_variable('DATABASE_USER'),
+        'PASSWORD': get_env_variable('DATABASE_PASSWORD'),
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -116,7 +131,36 @@ USE_L10N = True
 USE_TZ = True
 
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+
+
+
+# Django-bower
+# ------------
+
+# Specifie path to components root (you need to use absolute path)
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+
+BOWER_PATH = '/usr/local/bin/bower'
+
+BOWER_INSTALLED_APPS = (
+    'd3#3.3.13',
+    'nvd3#1.7.1',
+)
+

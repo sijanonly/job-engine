@@ -1,0 +1,6 @@
+# www.robotstxt.org/
+# While I am developing a website, I don’t want that Google indexes any of my pages.
+
+# Allow crawling of all content
+User-agent: *
+Disallow: /
